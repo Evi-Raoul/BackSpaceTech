@@ -9,10 +9,16 @@ jobs:
       - checkout
       - run: 
           name: docker build du Dockerfile
-          command: 'docker build -f Dockerfile -t tp1docker .'
+          command: 'docker build -f Dockerfile -t eviraoul/cicd .'
       - run: 
           name: docker run sur le port 8080
-          command: 'docker run -d -p 8080:8080 tp1docker'
+          command: 'docker run -d -p 8080:8080 eviraoul/cicd'
       - run: 
           name: Test curl 
           command: 'curl http://localhost:8080/'
+      - run:
+          name: docker authenticate
+          command: 'docker login -u eviraoul -p $DOCKERHUB'
+      - run :
+          name: docker push
+          command: 'docker push eviraoul/cicd'
